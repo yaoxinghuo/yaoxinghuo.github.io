@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
+  <component name="RemoteSynchronizer">
+    <option name="targetMappings">
+      <list>
+        <TargetMappings>
+          <option name="excludedCopyPaths">
+            <array>
+              <option value="**/.dependency-info/*" />
+              <option value="**/.git/*" />
+              <option value="**/.svn/*" />
+              <option value="**/CVS/*" />
+              <option value="**/*.java" />
+              <option value="**/.DS_Store" />
+              <option value="**/.DS_Store?" />
+              <option value="**/._*" />
+              <option value="**/.Spotlight-V100" />
+              <option value="**/Thumbs.db" />
+              <option value="**/*.log" />
+              <option value="**/._expandrive" />
+            </array>
+          </option>
+          <option name="name" value="Default" />
+        </TargetMappings>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>$USER_HOME$/.subversion</configuration>
+  </component>
+</project>
