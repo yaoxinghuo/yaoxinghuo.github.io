@@ -1,0 +1,115 @@
+<!--
+  ~ Copyright (c) 2019.
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>GDD</title>
+
+    <link rel="stylesheet" href="http://unpkg.com/iview/dist/styles/iview.css">
+
+    <script src="http://vuejs.org/js/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <script src="http://unpkg.com/iview/dist/iview.min.js"></script>
+</head>
+
+<body>
+<div id="app" style="margin: 10px;">
+    <row>
+        <i-col span="24">
+            Please input the original Google Drive FileID(must be shareable)
+        </i-col>
+    </row>
+    <row>
+        <i-col span="24">
+            <i-input v-model="ourl" placeholder="Enter Url with FileID" clearable/>
+        </i-col>
+    </row>
+    <row v-if="durl">
+        <i-col span="24">
+            Downloadable link:
+        </i-col>
+    </row>
+    <row v-if="durl">
+        <i-col span="20">
+            <a :href="durl" id="durl">{{durl}}</a>
+        </i-col>
+        <i-col span="4">
+            <i-button class="copy" type="primary" data-clipboard-target="#durl">copy</i-button>
+        </i-col>
+    </row>
+
+</div>
+
+<script>
+    var clipboard = new ClipboardJS('.copy');
+    /**
+     * 使用方式:
+     * #1: 普通接口模式( 不能断点续传, 一些下载软件不能正确获取文件名, 走谷歌CDN. )
+     * https://api.moeclub.org/GoogleDrive/<FileID>
+     * #2: 高级接口模式( 支持断点续传, 能正确获取文件名, 走CloudFare CDN, 支持中国等地区 )
+     * https://api.moeclub.org/GoogleDrive/<FileID>/NoLimit
+     *
+     * 注意: 当请求IP地址为中国等国家IP地址, 将自动使用接口#2 .
+     * @type {string}
+     */
+    var apiUrl = 'https://api.moeclub.org/GoogleDrive/<FileID>';
+    // var apiUrl2 = 'https://api.moeclub.org/GoogleDrive/<FileID>/NoLimit';
+    new Vue({
+        el: '#app',
+        data: {
+            ourl: ''
+        },
+        created: function(){
+            var _this = this;
+            clipboard.on('success', function(e) {
+                _this.$Message.success('Copied');
+                e.clearSelection(); //该方法用于清除文本选中后的默认样式（一般是文本区域出现背景色）
+            });
+            clipboard.on('error', function(e) {
+                _this.$Message.error('Copy Error');
+            });
+        },
+        methods: {},
+        computed: {
+            durl: {
+                get: function () {
+                    var fileID = parserFileID(this.ourl);
+                    if (!fileID) {
+                        return '';
+                    }
+                    return apiUrl.replace('<FileID>', fileID);
+                }
+            }
+        }
+    });
+
+    function parserFileID(url) {
+        if (!url) {
+            return '';
+        }
+        var idx = url.lastIndexOf('?id=');
+        if (idx > 0) {
+            return url.substring(idx + 4);
+        }
+        if (url.indexOf('/') == -1) {
+            return url;
+        }
+        return '';
+    }
+</script>
+</body>
+</html>
