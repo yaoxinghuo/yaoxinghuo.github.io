@@ -31,22 +31,26 @@
             height: 48px;
             line-height: 48px;
         }
-        .layout-footer-center{
+
+        .layout-footer-center {
             text-align: center;
             position: fixed;
-            bottom:0;
+            bottom: 0;
             width: 100%;
         }
+
         .img-responsive {
             width: 100%;
             height: auto;
         }
-        .layout{
+
+        .layout {
             background: #f5f7f9;
             position: relative;
             overflow: hidden;
         }
-        .demo-spin-icon-load{
+
+        .demo-spin-icon-load {
             animation: ani-demo-spin 1s linear infinite;
         }
     </style>
@@ -65,29 +69,24 @@
                     <breadcrumb-item>GDD</breadcrumb-item>
                 </breadcrumb>
                 <card>
-<!--                    <alert>-->
-<!--                        GDD-->
-<!--                    </alert>-->
+                    <!--                    <alert>-->
+                    <!--                        GDD-->
+                    <!--                    </alert>-->
                     <spin size="large" fix v-if="spinShow"></spin>
-                    <row>
-                        <i-col span="24">
-                            Please input the original Google Drive FileID
-                        </i-col>
-                        <i-col span="24">
-                            <i-input v-model="ourl" placeholder="Enter Url with FileID" clearable autofocus/>
-                        </i-col>
-                    </row>
-                    <row v-if="durl" style="margin-top: 10px;">
-                        <i-col span="24">
-                            Downloadable link:
-                        </i-col>
-                        <i-col span="24">
-                            <a target="_blank" :href="durl" id="durl">{{durl}}</a>
-                        </i-col>
-                        <i-col span="24">
+                    <div>Please input the original Google Drive FileID</div>
+                    <div>
+                        <i-input v-model="ourl" type="textarea" placeholder="Enter Url with FileID" clearable autofocus
+                                 autosize/>
+                    </div>
+                    <div v-if="durl" style="margin-top: 10px;">
+                        <div>Downloadable link:</div>
+                        <div>
+                            <a target="_blank" :href="durl" id="durl" style="word-break: break-word;">{{durl}}</a>
+                        </div>
+                        <div>
                             <i-button class="copy" type="primary" data-clipboard-target="#durl">Copy</i-button>
-                        </i-col>
-                    </row>
+                        </div>
+                    </div>
                 </card>
 
             </i-content>
@@ -109,7 +108,7 @@
      * 注意: 当请求IP地址为中国等国家IP地址, 将自动使用接口#2 .
      * @type {string}
      */
-    // var apiUrl = 'https://api.moeclub.org/GoogleDrive/<FileID>';
+        // var apiUrl = 'https://api.moeclub.org/GoogleDrive/<FileID>';
     var apiUrl = 'https://api.moeclub.org/GoogleDrive/<FileID>/NoLimit';
     new Vue({
         el: '#app',
@@ -117,13 +116,13 @@
             ourl: '',
             spinShow: false
         },
-        created: function(){
+        created: function () {
             var _this = this;
-            clipboard.on('success', function(e) {
+            clipboard.on('success', function (e) {
                 _this.$Message.success('Copied');
                 e.clearSelection(); //该方法用于清除文本选中后的默认样式（一般是文本区域出现背景色）
             });
-            clipboard.on('error', function(e) {
+            clipboard.on('error', function (e) {
                 _this.$Message.error('Copy Error');
             });
         },
@@ -141,6 +140,12 @@
         }
     });
 
+    /**
+     *
+     * @param url https://drive.google.com/open?id=XXXXX
+     * or https://drive.google.com/file/d/XXXXX/view?xxx
+     * @returns {string|*}
+     */
     function parserFileID(url) {
         if (!url) {
             return '';
@@ -148,6 +153,13 @@
         var idx = url.lastIndexOf('?id=');
         if (idx > 0) {
             return url.substring(idx + 4);
+        }
+        idx = url.lastIndexOf('/file/d/');
+        if (idx > 0) {
+            var idx2 = url.indexOf('/', idx + 8);
+            if (idx > 0) {
+                return url.substring(idx + 8, idx2);
+            }
         }
         if (url.indexOf('/') == -1) {
             return url;
