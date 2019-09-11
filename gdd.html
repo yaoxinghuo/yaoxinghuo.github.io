@@ -24,33 +24,76 @@
     <script src="https://vuejs.org/js/vue.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
     <script src="https://unpkg.com/iview/dist/iview.min.js"></script>
+
+    <style>
+        .ivu-layout-header {
+            z-index: 100;
+            height: 48px;
+            line-height: 48px;
+        }
+        .layout-footer-center{
+            text-align: center;
+            position: fixed;
+            bottom:0;
+            width: 100%;
+        }
+        .img-responsive {
+            width: 100%;
+            height: auto;
+        }
+        .layout{
+            background: #f5f7f9;
+            position: relative;
+            overflow: hidden;
+        }
+        .demo-spin-icon-load{
+            animation: ani-demo-spin 1s linear infinite;
+        }
+    </style>
 </head>
 
 <body>
-<div id="app" style="margin: 10px;">
-    <row>
-        <i-col span="24">
-            Please input the original Google Drive FileID(must be shareable)
-        </i-col>
-    </row>
-    <row>
-        <i-col span="24">
-            <i-input v-model="ourl" placeholder="Enter Url with FileID" clearable autofocus/>
-        </i-col>
-    </row>
-    <row v-if="durl">
-        <i-col span="24">
-            Downloadable link:
-        </i-col>
-    </row>
-    <row v-if="durl">
-        <i-col span="20">
-            <a target="_blank" :href="durl" id="durl">{{durl}}</a>
-        </i-col>
-        <i-col span="4">
-            <i-button class="copy" type="primary" data-clipboard-target="#durl">Copy</i-button>
-        </i-col>
-    </row>
+<div id="app">
+    <div class="layout">
+        <layout>
+            <i-header :style="{color: 'white', position: 'fixed', width: '100%'}">
+                <h2 style="text-align: center;">GDD</h2>
+            </i-header>
+            <i-content :style="{padding: '5px 5px',margin: '42px 0 0'}">
+                <breadcrumb :style="{margin: '12px 6px'}">
+                    <breadcrumb-item><a href="http://www.terrynow.com">首页</a></breadcrumb-item>
+                    <breadcrumb-item>GDD</breadcrumb-item>
+                </breadcrumb>
+                <card>
+                    <alert>
+                        GDD
+                    </alert>
+                    <spin size="large" fix v-if="spinShow"></spin>
+                    <row>
+                        <i-col span="24">
+                            Please input the original Google Drive FileID
+                        </i-col>
+                        <i-col span="24">
+                            <i-input v-model="ourl" placeholder="Enter Url with FileID" clearable autofocus/>
+                        </i-col>
+                    </row>
+                    <row v-if="durl" style="margin-top: 10px;">
+                        <i-col span="24">
+                            Downloadable link:
+                        </i-col>
+                        <i-col span="24">
+                            <a target="_blank" :href="durl" id="durl">{{durl}}</a>
+                        </i-col>
+                        <i-col span="24">
+                            <i-button class="copy" type="primary" data-clipboard-target="#durl">Copy</i-button>
+                        </i-col>
+                    </row>
+                </card>
+
+            </i-content>
+            <i-footer class="layout-footer-center">&copy; terrynow.com</i-footer>
+        </layout>
+    </div>
 
 </div>
 
@@ -71,7 +114,8 @@
     new Vue({
         el: '#app',
         data: {
-            ourl: ''
+            ourl: '',
+            spinShow: false
         },
         created: function(){
             var _this = this;
