@@ -78,8 +78,7 @@
                     <spin size="large" fix v-if="spinShow"></spin>
                     <div>Please input the original Google Drive FileID</div>
                     <div>
-                        <i-input v-model="ourl" type="textarea" placeholder="Enter Url with FileID" clearable autofocus
-                                 autosize/>
+                        <i-input v-model="ourl" type="textarea" placeholder="Enter Url with FileID" autofocus autosize/>
                     </div>
                     <div v-if="durl" style="margin-top: 10px;">
                         <div>Downloadable link:</div>
@@ -88,6 +87,7 @@
                         </div>
                         <div>
                             <i-button class="copy" type="primary" data-clipboard-target="#durl">Copy</i-button>
+                            <i-button type="warning" @click="reset">Reset</i-button>
                         </div>
                     </div>
                 </card>
@@ -107,8 +107,12 @@
      * https://api.moeclub.org/GoogleDrive/<FileID>
      * #2: 高级接口模式( 支持断点续传, 能正确获取文件名, 走CloudFare CDN, 支持中国等地区 )
      * https://api.moeclub.org/GoogleDrive/<FileID>/NoLimit
+     * #3: 多项打包模式( 需等待, 临时链接, 支持文件夹, 谷歌CDN, 支持断点续传, 能正确获取文件名, 支持中国等地区. )
+     * https://api.moeclub.org/Package/<FileID[,FileID]>
      *
-     * 注意: 当请求IP地址为中国等国家IP地址, 将自动使用接口#2 .
+     * 注意:
+     * 当使用接口#1, 且请求IP地址为中国等国家IP地址时, 将自动切换到接口#2 .
+     * 使用接口#3时, 多项目(文件或文件夹)用英文逗号分隔.
      * @type {string}
      */
         // var apiUrl = 'https://api.moeclub.org/GoogleDrive/<FileID>';
@@ -129,7 +133,11 @@
                 _this.$Message.error('Copy Error');
             });
         },
-        methods: {},
+        methods: {
+            reset: function () {
+                this.ourl = '';
+            }
+        },
         computed: {
             durl: {
                 get: function () {
