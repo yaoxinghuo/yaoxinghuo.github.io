@@ -114,7 +114,7 @@
           </div>
           <div class="footer-copyright">
             <div class="container">
-            TerryNow.com © 2026 All Rights Reserved
+            TerryNow.com © <span id="copyright-year"></span> All Rights Reserved
             <!--<a class="grey-text text-lighten-4 right" href="http://www.miibeian.gov.cn/">沪ICP备15005943号-1</a>-->
             </div>
           </div>
@@ -127,6 +127,8 @@
   <script src="js/init.js"></script>
   <script>
   (function() {
+    $('#copyright-year').text(new Date().getFullYear());
+
     function goReferral() {
       var url = $('#referral-url').val().trim();
       if (!url) return;
