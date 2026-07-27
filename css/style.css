@@ -32,3 +32,112 @@
 #referral-url::placeholder {
   color: rgba(255, 255, 255, 0.65);
 }
+
+/* ---------- Dark mode ---------- */
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+
+  /* 导航：略深的蓝，避免过亮 */
+  nav.light-blue.lighten-1 {
+    background-color: #1565c0 !important;
+  }
+
+  nav ul a {
+    color: #fff;
+  }
+
+  nav .button-collapse {
+    color: #fff;
+  }
+
+  /* 侧滑菜单（移动端） */
+  .side-nav {
+    background-color: #1e1e1e;
+  }
+
+  .side-nav a {
+    color: #e0e0e0 !important;
+  }
+
+  /* 主标题区 */
+  #index-banner .header.orange-text {
+    color: #ffb74d !important;
+  }
+
+  #index-banner h5.header {
+    color: #bdbdbd;
+  }
+
+  /* 三栏技能区 */
+  .icon-block h5 {
+    color: #f5f5f5;
+  }
+
+  .icon-block p.light {
+    color: #b0b0b0;
+  }
+
+  .icon-block .light-blue-text {
+    color: #64b5f6 !important;
+  }
+
+  .icon-block strong {
+    color: #e8e8e8;
+  }
+
+  /* Footer */
+  footer.page-footer.light-blue {
+    background-color: #0d47a1 !important;
+  }
+
+  footer.page-footer .footer-copyright {
+    background-color: rgba(0, 0, 0, 0.25);
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  footer .white-text {
+    color: #fff !important;
+  }
+
+  footer a.grey-text.text-lighten-3 {
+    color: #e0e0e0 !important;
+  }
+
+  footer a.grey-text.text-lighten-3:hover {
+    color: #fff !important;
+  }
+
+  /* 跳转输入框在暗色 footer 上 */
+  #referral-url {
+    border-bottom-color: rgba(255, 255, 255, 0.55) !important;
+    color: #fff;
+  }
+
+  #referral-url:focus {
+    border-bottom-color: #ffb74d !important;
+    box-shadow: 0 1px 0 0 #ffb74d !important;
+  }
+
+  #referral-url::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  #referral-url::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  #referral-url:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  #referral-url::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
