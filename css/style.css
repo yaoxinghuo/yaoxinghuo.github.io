@@ -49,21 +49,47 @@
     background-color: #1565c0 !important;
   }
 
-  nav ul a {
-    color: #fff;
-  }
-
   nav .button-collapse {
     color: #fff;
   }
 
-  /* 侧滑菜单（移动端） */
-  .side-nav {
-    background-color: #1e1e1e;
+  /*
+   * 本站 nav 的 ul 同时带 right + side-nav。
+   * 桌面端应透明贴在蓝底上；深色侧栏样式只给移动端抽屉。
+   */
+  nav ul.right.side-nav {
+    background-color: transparent;
+    box-shadow: none;
   }
 
-  .side-nav a {
-    color: #e0e0e0 !important;
+  nav ul.right.side-nav > li > a {
+    color: #fff !important;
+    background-color: transparent;
+  }
+
+  nav ul.right.side-nav > li > a:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  nav ul.right.side-nav .octicon,
+  nav ul.right.side-nav i {
+    color: #fff;
+  }
+
+  /* 侧滑菜单（仅移动端抽屉） */
+  @media only screen and (max-width: 992px) {
+    ul.side-nav {
+      background-color: #1e1e1e;
+    }
+
+    ul.side-nav a {
+      color: #e0e0e0 !important;
+    }
+
+    ul.side-nav li:hover,
+    ul.side-nav li.active {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
   }
 
   /* 主标题区 */
